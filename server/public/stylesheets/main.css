@@ -1,0 +1,14 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+.mat {
+  position: absolute;
+  margin: auto;
+}
+.menu-column-sub h3 {
+  color: #32b0d7;
+}
+.menu-column-sub .text-content {
+  text-align: justify;
+}
+.footer-sub {
+  padding-top: 3rem;
+}

@@ -4,6 +4,7 @@ var less = require('gulp-less');
 var livereload = require('gulp-livereload');
 var nodemon = require('gulp-nodemon');
 var del = require('del');
+var rename = require('gulp-rename');
 
 var paths = {
   script: ['app/script/**/*.js', 'app/script/**/*.jsx'],
@@ -14,7 +15,12 @@ var resolve = {
   extensions: ['', '.js', '.jsx'],
 };
 
-gulp.task('webpack', function() {
+// CLIENT SIDE SCRIPTS
+gulp.task('clean', function() {
+  return del(['server/public/javascripts/**', '!server/public/javascripts', '!server/public/javascripts/JSXTransformer.js', '!server/public/javascripts/react.js']);
+});
+
+gulp.task('build', ['clean'], function() {
   return gulp.src('app/script/entry.js')
   .pipe(webpack({
     module:{
@@ -28,6 +34,7 @@ gulp.task('webpack', function() {
     },
     resolve: resolve,
   }))
+  .pipe(rename('bundle.js'))
   .pipe(gulp.dest('server/public/javascripts/'))
   .pipe(livereload());
 });
@@ -38,10 +45,13 @@ gulp.task('less', function() {
     .pipe(gulp.dest('server/public/stylesheets'));
 });
 
-gulp.task('clean', function() {
-  return del(['server/public/javascripts/**']);
+gulp.task('watch', function() {
+  livereload.listen();
+  gulp.watch(paths.script, ['build']);
+  gulp.watch(paths.style, ['less']);
 });
 
+// SERVER SIDE SCRIPTS
 gulp.task('start', function() {
   nodemon({
     script: './server/bin/www',
@@ -51,11 +61,5 @@ gulp.task('start', function() {
   });
 });
 
-gulp.task('watch', function() {
-  livereload.listen();
-  gulp.watch(paths.script, ['webpack']);
-  gulp.watch(paths.style, ['less']);
-});
-
 // The default task (called when you run `gulp` from cli)
-gulp.task('default', ['watch', 'webpack', 'less']);
+gulp.task('default', ['watch', 'build', 'less']);

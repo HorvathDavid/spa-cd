@@ -1,1 +1,2 @@
-http-server
+npm install
+start cmd /k gulp start

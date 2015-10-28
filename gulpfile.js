@@ -17,7 +17,13 @@ var resolve = {
 
 // CLIENT SIDE SCRIPTS
 gulp.task('clean', function() {
-  return del(['server/public/javascripts/**', '!server/public/javascripts', '!server/public/javascripts/JSXTransformer.js', '!server/public/javascripts/react.js']);
+  return del([
+    'server/public/javascripts/**',
+    '!server/public/javascripts',
+    '!server/public/javascripts/JSXTransformer.js',
+    '!server/public/javascripts/react.js',
+    '!server/public/javascripts/jquery-ui.min.js',
+  ]);
 });
 
 gulp.task('build', ['clean'], function() {

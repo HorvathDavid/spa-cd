@@ -1,6 +1,6 @@
 {
   "name": "SPA_CD",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "SPA, REST, autocomplete",
   "main": "bundle.js",
   "dependencies": {
